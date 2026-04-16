@@ -2,7 +2,7 @@
 <html lang="en" data-lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
 <meta name="author" content="Lisha Liang" />
 <meta name="theme-color" content="#faf8f4" />
@@ -581,22 +581,173 @@
     .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
   }
   @media (max-width: 768px) {
-    .container { padding: 0 22px; }
-    .hero { padding: 130px 0 70px; }
-    .hero-grid { grid-template-columns: 1fr; gap: 60px; }
-    .hero-photo-wrap { order: -1; }
-    .hero-photo-frame, .hero-photo-wrap::before { width: 300px; }
-    .hero-credit, .hero-num { display: none; }
-    .trust-pod { max-width: 100%; }
-    .services-grid { grid-template-columns: 1fr; }
-    .auth-grid { grid-template-columns: repeat(2, 1fr); }
-    .auth-item::after { display: none; }
-    .promise-grid { grid-template-columns: 1fr; }
-    .footer-top { grid-template-columns: 1fr; gap: 30px; }
+    /* Global */
+    .container { padding: 0 20px; }
+    section { padding: clamp(56px, 12vw, 90px) 0; }
+
+    /* Nav — hide main links on mobile, keep logo + lang switcher */
+    .nav { padding: 14px 0; }
+    .nav.scrolled { padding: 10px 0; }
+    .nav-inner { gap: 12px; }
+    .nav-logo { width: 34px; height: 34px; }
+    .nav-name { font-size: 15px; }
     .nav-sub { display: none; }
-    .contact-left, .contact-right { padding: 40px 30px; }
-    .chat { right: 14px; bottom: 90px; width: calc(100vw - 28px); }
-    .fab { right: 18px; bottom: 18px; }
+    .nav-links { gap: 0; }
+    .nav-link { display: none; }
+    .lang-switch { padding: 3px; }
+    .lang-btn { font-size: 10px; padding: 5px 9px; letter-spacing: 0.02em; }
+
+    /* Hero */
+    .hero { padding: 110px 0 56px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-photo-wrap { order: -1; justify-self: center; }
+    .hero-photo-wrap::before { display: none; }
+    .hero-photo-frame { width: min(280px, 82vw) !important; aspect-ratio: 4/5.2; }
+    .hero-credit, .hero-num { display: none; }
+    .hero-badge { left: -10px; bottom: 24px; padding: 10px 14px; }
+    .hero-badge-txt { font-size: 9.5px; letter-spacing: 0.12em; }
+    .hero-badge-sub { font-size: 10px; }
+    .hero-meta { gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
+    .hero-meta-item { font-size: 9.5px; letter-spacing: 0.16em; }
+    .hero-meta-sep { width: 14px; }
+    .hero-name { font-size: clamp(42px, 12.5vw, 60px) !important; white-space: normal !important; letter-spacing: -0.025em; line-height: 1.02; margin-bottom: 12px; }
+    .hero-title { font-size: clamp(17px, 4.8vw, 22px); margin: 14px 0 22px; max-width: 100%; line-height: 1.4; }
+    .hero-sub { font-size: 14.5px; line-height: 1.75; margin-bottom: 30px; max-width: 100%; }
+
+    /* CTAs — stack full-width */
+    .cta-row { flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 38px; }
+    .btn { width: 100%; justify-content: center; padding: 15px 22px; font-size: 12px; letter-spacing: 0.08em; }
+    .btn-ghost { padding: 14px 22px; }
+
+    /* Trust pod — keep 3-col but compact */
+    .trust-pod { grid-template-columns: repeat(3, 1fr); gap: 0; max-width: 100%; padding-top: 20px; }
+    .trust-pod > div { padding: 2px 10px 2px 0 !important; }
+    .trust-pod > div:first-child { padding-left: 0 !important; }
+    .trust-pod > div:last-child { padding-left: 12px !important; padding-right: 0 !important; }
+    .trust-val { font-size: 20px; gap: 2px; margin-bottom: 4px; }
+    .trust-val em { font-size: 8px; margin-bottom: 2px; }
+    .trust-lbl { font-size: 8.5px; letter-spacing: 0.12em; line-height: 1.25; }
+
+    /* Marquee */
+    .marquee { padding: 13px 0; }
+    .marquee-track { font-size: 10px; letter-spacing: 0.2em; }
+    .marquee-track span { padding: 0 18px; }
+
+    /* Authority stats */
+    .authority { padding: 48px 0; }
+    .auth-grid { grid-template-columns: repeat(2, 1fr); gap: 30px 16px; }
+    .auth-item { padding: 0 8px; }
+    .auth-item::after { display: none; }
+    .auth-num { font-size: clamp(32px, 9vw, 46px) !important; margin-bottom: 10px; letter-spacing: -0.025em; }
+    .auth-num .unit, .auth-num .plus { font-size: 10px !important; margin-bottom: 6px !important; }
+    .auth-lbl { font-size: 9.5px; letter-spacing: 0.14em; line-height: 1.35; }
+
+    /* Section heads */
+    .section-head { margin: 0 auto 44px; }
+    .section-head h2 { font-size: clamp(34px, 9.5vw, 48px) !important; margin: 16px 0 16px; letter-spacing: -0.025em; line-height: 1.02; }
+    .section-head p { font-size: 15px; line-height: 1.65; }
+    .section-headline { font-size: clamp(28px, 7.5vw, 38px); margin-bottom: 20px; }
+    .section-headline.large { font-size: clamp(30px, 8.5vw, 42px); margin-bottom: 14px; }
+    .eyebrow { font-size: 10px; letter-spacing: 0.2em; gap: 10px; }
+    .eyebrow::before { width: 26px; }
+
+    /* About */
+    .about-grid { grid-template-columns: 1fr; gap: 36px; }
+    .about-photo-frame { max-width: min(340px, 80vw); margin: 0 auto; aspect-ratio: 4/5; }
+    .about-caption { position: relative; right: auto; bottom: auto; max-width: 100%; margin-top: 14px; }
+    .about-tags { margin-top: 20px; justify-content: center; }
+    .about-copy h2 { font-size: clamp(30px, 8vw, 40px); margin: 18px 0 22px; }
+    .about-copy p { font-size: 14.5px; line-height: 1.8; }
+    .about-copy p.pull { font-size: 16px; padding-left: 14px; margin-top: 22px; }
+    .about-signature { font-size: 17px; margin-top: 28px; }
+
+    /* Services */
+    .services-grid { grid-template-columns: 1fr; gap: 16px; max-width: 100%; }
+    .service-card { padding: 30px 24px 26px; }
+    .service-icon { width: 50px; height: 50px; margin-bottom: 18px; }
+    .service-icon svg { width: 34px; height: 34px; }
+    .service-num { font-size: 9.5px; letter-spacing: 0.24em; margin-bottom: 16px; }
+    .service-card h3 { font-size: 19px; }
+    .service-card p { font-size: 14px; line-height: 1.7; margin-bottom: 16px; }
+    .service-list { padding-top: 12px; }
+    .service-list li { font-size: 10px; letter-spacing: 0.1em; padding: 4px 0; }
+
+    /* Why Co-ops */
+    .why-grid { grid-template-columns: 1fr; gap: 36px; }
+    .why-side { position: static; }
+    .why-side h2 { font-size: clamp(30px, 8vw, 42px); margin-bottom: 18px; }
+    .why-side p { font-size: 14.5px; line-height: 1.75; }
+    .why-list { border-top-width: 1px; }
+    .why-item { padding: 20px 0; gap: 16px; }
+    .why-ix { font-size: 10px; letter-spacing: 0.2em; }
+    .why-item h4 { font-size: 17px; }
+    .why-item p { font-size: 13.5px; line-height: 1.7; }
+
+    /* Testimonials */
+    .testimonials { padding: 60px 0 50px; }
+    .test-head { margin-bottom: 40px; }
+    .quote-mark { font-size: 72px; margin-bottom: -18px; }
+    .test-wrap { min-height: 340px; padding: 0 4px; }
+    .testimonial-text { font-size: clamp(17px, 4.5vw, 22px) !important; line-height: 1.55; margin-bottom: 24px; letter-spacing: -0.005em; }
+    .testimonial-author { font-size: 13px; }
+    .testimonial-detail { font-size: 10px; letter-spacing: 0.14em; }
+    .dots { margin-top: 32px; gap: 8px; }
+    .dot { width: 7px; height: 7px; }
+    .dot.active { width: 24px; }
+
+    /* Contact */
+    .contact-shell { grid-template-columns: 1fr; border-radius: 4px; max-width: 100%; }
+    .contact-left { padding: 36px 24px 26px; }
+    .contact-right { padding: 34px 24px 38px; }
+    .contact-left h2 { font-size: clamp(28px, 7.5vw, 36px); margin: 16px 0 14px; }
+    .contact-left p { font-size: 14px; margin-bottom: 26px; line-height: 1.65; }
+    .form { gap: 18px; }
+    .field label { font-size: 10px; }
+    .input, .textarea { font-size: 15.5px; padding: 12px 0; }
+    .textarea { min-height: 70px; }
+    .send-btn { width: 100%; justify-content: center; padding: 15px 22px; }
+    .contact-right h3 { font-size: 21px; margin: 14px 0 20px; }
+    .info-row { padding: 14px 0; gap: 12px; }
+    .info-icon { width: 34px; height: 34px; font-size: 14px; }
+    .info-lbl { font-size: 9px; letter-spacing: 0.18em; }
+    .info-val { font-size: 13.5px; }
+    .map { padding-top: 22px; }
+    .map-label { font-size: 22px; }
+    .map-sub { font-size: 9.5px; letter-spacing: 0.16em; }
+
+    /* Footer */
+    .footer { padding: 40px 0 26px; }
+    .footer-top { grid-template-columns: 1fr; gap: 26px; padding-bottom: 28px; }
+    .footer-brand { max-width: 100%; }
+    .footer-desc { font-size: 12.5px; }
+    .footer-col h5 { margin-bottom: 14px; font-size: 9.5px; }
+    .footer-col ul { gap: 8px; }
+    .footer-col a { font-size: 13px; }
+    .footer-bottom { flex-direction: column; gap: 14px; padding-top: 22px; align-items: flex-start; }
+    .footer-copy { font-size: 10.5px; }
+    .footer-disclaimer { font-size: 9.5px; max-width: 100%; line-height: 1.55; }
+
+    /* Chat FAB + window */
+    .fab { right: 16px; bottom: 16px; width: 54px; height: 54px; font-size: 20px; }
+    .chat { right: 12px; bottom: 82px; width: calc(100vw - 24px); height: min(480px, calc(100vh - 120px)); border-radius: 16px; }
+    .chat-header { padding: 16px 18px; }
+    .chat-title { font-size: 15px; }
+  }
+
+  /* Small phones (iPhone SE, narrow Androids) */
+  @media (max-width: 400px) {
+    .container { padding: 0 18px; }
+    .hero-name { font-size: 40px !important; }
+    .hero-meta { gap: 6px; }
+    .hero-meta-item { font-size: 9px; letter-spacing: 0.14em; }
+    .hero-meta-sep { width: 10px; }
+    .trust-val { font-size: 18px; }
+    .trust-lbl { font-size: 8px; }
+    .nav-name { font-size: 14px; }
+    .nav-logo { width: 32px; height: 32px; }
+    .lang-btn { font-size: 9.5px; padding: 5px 7px; }
+    .auth-num { font-size: 32px !important; }
+    .section-head h2 { font-size: 32px !important; }
   }
 </style>
 </head>

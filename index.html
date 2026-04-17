@@ -598,22 +598,24 @@
     .lang-btn { font-size: 10px; padding: 5px 9px; letter-spacing: 0.02em; }
 
     /* Hero — compact, text-first feel */
-    .hero { padding: 96px 0 48px; }
-    .hero-grid { grid-template-columns: 1fr; gap: 32px; }
-    .hero-photo-wrap { order: -1; justify-self: center; }
+    .hero { padding: 88px 0 40px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+    .hero-photo-wrap { order: -1; justify-self: center; position: relative; }
     .hero-photo-wrap::before { display: none; }
-    .hero-photo-frame { width: min(240px, 72vw) !important; aspect-ratio: 4/5 !important; box-shadow: var(--sh-md); }
+    .hero-photo-frame { width: min(260px, 74vw) !important; aspect-ratio: 4/5 !important; box-shadow: var(--sh-md); border-radius: 3px; }
     .hero-credit, .hero-num { display: none; }
-    .hero-badge { left: -6px; bottom: 18px; padding: 9px 13px; border-radius: 3px; }
-    .hero-badge-txt { font-size: 9px; letter-spacing: 0.12em; }
-    .hero-badge-sub { font-size: 9.5px; margin-top: 3px; }
+    /* Badge — outside photo, below it, to keep photo clean */
+    .hero-badge { position: static; margin: 12px auto 0; padding: 8px 14px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; background: var(--cream); border: 1px solid rgba(184,146,74,0.32); box-shadow: var(--sh-sm); animation: none; }
+    .hero-badge-row { display: contents; }
+    .hero-badge-txt { font-size: 9px; letter-spacing: 0.14em; }
+    .hero-badge-sub { display: none; }
     .hero-badge-dot { width: 6px; height: 6px; }
-    .hero-meta { gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
-    .hero-meta-item { font-size: 9px; letter-spacing: 0.14em; }
-    .hero-meta-sep { width: 12px; }
-    .hero-name { font-size: clamp(38px, 11.5vw, 54px) !important; white-space: normal !important; letter-spacing: -0.025em; line-height: 1.02; margin-bottom: 10px; }
-    .hero-title { font-size: clamp(15px, 4.2vw, 19px); margin: 12px 0 20px; max-width: 100%; line-height: 1.45; }
-    .hero-sub { font-size: 14px; line-height: 1.7; margin-bottom: 26px; max-width: 100%; }
+    .hero-meta { gap: 7px; margin-bottom: 16px; flex-wrap: wrap; justify-content: flex-start; }
+    .hero-meta-item { font-size: 8.5px; letter-spacing: 0.14em; }
+    .hero-meta-sep { width: 10px; }
+    .hero-name { font-size: clamp(38px, 11.5vw, 52px) !important; white-space: normal !important; letter-spacing: -0.025em; line-height: 1.02; margin-bottom: 10px; }
+    .hero-title { font-size: clamp(14px, 4vw, 18px); margin: 10px 0 18px; max-width: 100%; line-height: 1.45; }
+    .hero-sub { font-size: 14px; line-height: 1.7; margin-bottom: 24px; max-width: 100%; }
 
     /* CTAs — stack full-width, bigger touch */
     .cta-row { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 30px; }
@@ -728,11 +730,16 @@
     .footer-copy { font-size: 10.5px; }
     .footer-disclaimer { font-size: 9.5px; max-width: 100%; line-height: 1.55; }
 
-    /* Chat FAB + window */
-    .fab { right: 16px; bottom: 16px; width: 54px; height: 54px; font-size: 20px; }
-    .chat { right: 12px; bottom: 82px; width: calc(100vw - 24px); height: min(480px, calc(100vh - 120px)); border-radius: 16px; }
-    .chat-header { padding: 16px 18px; }
-    .chat-title { font-size: 15px; }
+    /* Chat FAB — smaller, further from content, auto-translucent to not block trust pod */
+    .fab { right: 14px; bottom: 14px; width: 46px; height: 46px; font-size: 17px; opacity: 0.88; }
+    .fab:hover, .fab:active { opacity: 1; transform: scale(1.04); }
+    .fab::after { inset: -4px; }
+    .chat { right: 10px; bottom: 70px; width: calc(100vw - 20px); height: min(460px, calc(100vh - 110px)); border-radius: 14px; }
+    .chat-header { padding: 14px 16px; }
+    .chat-title { font-size: 14px; }
+
+    /* Add bottom space under trust pod so FAB doesn't overlap */
+    .hero { padding-bottom: 56px; }
   }
 
   /* Small phones (iPhone SE 375px, narrow Androids 360px) */

@@ -505,6 +505,10 @@
   .input:focus, .textarea:focus { border-bottom-color: var(--gold); }
   .textarea { resize: vertical; min-height: 84px; font-family: inherit; line-height: 1.6; }
   .send-btn { margin-top: 14px; align-self: flex-start; background: var(--ink); color: var(--cream); padding: 16px 34px; border-radius: 999px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), background 0.4s var(--ease); display: inline-flex; align-items: center; gap: 12px; }
+  .send-btn[disabled] { opacity: 0.7; cursor: wait; }
+  .thanks-banner { padding: 28px 30px; background: var(--cream); border: 1px solid rgba(184,146,74,0.3); border-radius: 6px; box-shadow: var(--sh-sm); }
+  .thanks-title { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 600; color: var(--gold-deep); margin-bottom: 8px; letter-spacing: -0.01em; }
+  .thanks-body { font-size: 15px; color: var(--ink-soft); line-height: 1.6; }
   .send-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(10,10,10,0.24); background: var(--ink-2); }
   .contact-right { padding: 64px 48px; background: var(--ink); color: var(--cream); position: relative; overflow: hidden; display: flex; flex-direction: column; }
   .contact-right::before { content: ""; position: absolute; width: 420px; height: 420px; border-radius: 50%; filter: blur(120px); background: radial-gradient(circle, rgba(212,185,120,0.22), transparent 70%); top: -100px; right: -100px; pointer-events: none; }
@@ -1040,28 +1044,40 @@
         <span class="eyebrow" data-i18n="contact_eyebrow">The 15-min audit</span>
         <h2 data-i18n="contact_h1">Let's talk.</h2>
         <p data-i18n="contact_sub">Tell me what you're looking to protect. I'll review it personally and reply within one business day — in the language of your choice. No pressure, no obligation.</p>
-        <form class="form" id="contactForm" novalidate>
+        <form class="form" id="contactForm" action="https://formsubmit.co/lisha_liang@cooperators.ca" method="POST">
+          <!-- FormSubmit configuration -->
+          <input type="hidden" name="_subject" value="New enquiry via lishainsurance.com">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://lishainsurance.com/?thanks=1">
+          <input type="hidden" name="_autoresponse" value="Thank you for reaching out. I'll personally review your enquiry and reply within one business day. — Lisha Liang">
+          <!-- Honeypot for bot filtering -->
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <div class="field">
             <label for="f-name" data-i18n="f_name">Name</label>
-            <input id="f-name" class="input" type="text" data-i18n-attr="placeholder" data-i18n-ph="f_name_ph" placeholder="Your full name" required>
+            <input id="f-name" name="Name" class="input" type="text" data-i18n-attr="placeholder" data-i18n-ph="f_name_ph" placeholder="Your full name" required>
           </div>
           <div class="field">
             <label for="f-email" data-i18n="f_email">Email</label>
-            <input id="f-email" class="input" type="email" data-i18n-attr="placeholder" data-i18n-ph="f_email_ph" placeholder="you@example.com" required>
+            <input id="f-email" name="Email" class="input" type="email" data-i18n-attr="placeholder" data-i18n-ph="f_email_ph" placeholder="you@example.com" required>
           </div>
           <div class="field">
             <label for="f-phone" data-i18n="f_phone">Phone (optional)</label>
-            <input id="f-phone" class="input" type="tel" data-i18n-attr="placeholder" data-i18n-ph="f_phone_ph" placeholder="(437) 000-0000">
+            <input id="f-phone" name="Phone" class="input" type="tel" data-i18n-attr="placeholder" data-i18n-ph="f_phone_ph" placeholder="(437) 000-0000">
           </div>
           <div class="field">
             <label for="f-msg" data-i18n="f_msg">What would you like covered?</label>
-            <textarea id="f-msg" class="textarea" data-i18n-attr="placeholder" data-i18n-ph="f_msg_ph" placeholder="Auto, home, business, life — or just tell me about your situation." required></textarea>
+            <textarea id="f-msg" name="Message" class="textarea" data-i18n-attr="placeholder" data-i18n-ph="f_msg_ph" placeholder="Auto, home, business, life — or just tell me about your situation." required></textarea>
           </div>
           <button type="submit" class="send-btn" data-hover>
-            <span data-i18n="f_send">Request my audit</span>
+            <span data-i18n="f_send">Send message</span>
             <span class="btn-arrow" aria-hidden="true"></span>
           </button>
         </form>
+        <div id="thanksBanner" class="thanks-banner" hidden>
+          <div class="thanks-title" data-i18n="thanks_title">✓ Message received.</div>
+          <div class="thanks-body" data-i18n="thanks_body">Thank you. I'll personally reply within one business day. — Lisha</div>
+        </div>
       </div>
       <aside class="contact-right">
         <span class="eyebrow" data-i18n="info_eyebrow">Direct line</span>
@@ -1251,6 +1267,8 @@ const I18N = {
     f_phone: "Phone (optional)", f_phone_ph: "(437) 000-0000",
     f_msg: "What would you like covered?", f_msg_ph: "Auto, home, business, life — or just tell me about your situation.",
     f_send: "Send message",
+    thanks_title: "✓ Message received.",
+    thanks_body: "Thank you. I'll personally reply within one business day. — Lisha",
     info_eyebrow: "Direct line", info_h: "Reach me directly.",
     info_email: "Email", info_phone: "Phone", info_hours: "Hours",
     info_hours_v: "Mon – Fri · 9:00 am – 6:00 pm EST",
@@ -1341,6 +1359,8 @@ const I18N = {
     f_phone: "电话(选填)", f_phone_ph: "(437) 000-0000",
     f_msg: "您希望保障哪些方面?", f_msg_ph: "汽车、房屋、商业、人寿 —— 或直接描述您的情况。",
     f_send: "发送消息",
+    thanks_title: "✓ 消息已收到。",
+    thanks_body: "感谢您的留言。我会在一个工作日内亲自回复。—— 丽莎",
     info_eyebrow: "直接联系", info_h: "直接联系我。",
     info_email: "电子邮箱", info_phone: "电话", info_hours: "工作时间",
     info_hours_v: "周一至周五 · 上午 9:00 – 下午 6:00 (EST)",
@@ -1431,6 +1451,8 @@ const I18N = {
     f_phone: "電話番号(任意)", f_phone_ph: "(437) 000-0000",
     f_msg: "どの分野の保障をご希望ですか?", f_msg_ph: "自動車・住宅・事業・生命 —— またはご状況を簡単にお書きください。",
     f_send: "送信",
+    thanks_title: "✓ メッセージを受信しました。",
+    thanks_body: "ありがとうございます。1営業日以内にリシャより直接ご返信いたします。",
     info_eyebrow: "直通", info_h: "直接ご連絡ください。",
     info_email: "メール", info_phone: "電話", info_hours: "営業時間",
     info_hours_v: "月 – 金 · 午前9:00 – 午後6:00 (EST)",
@@ -1521,6 +1543,8 @@ const I18N = {
     f_phone: "전화 (선택)", f_phone_ph: "(437) 000-0000",
     f_msg: "어떤 보장이 필요하신가요?", f_msg_ph: "자동차 · 주택 · 사업 · 생명 — 또는 상황을 간단히 알려주세요.",
     f_send: "메시지 보내기",
+    thanks_title: "✓ 메시지가 전송되었습니다.",
+    thanks_body: "감사합니다. 1영업일 이내에 리샤가 직접 답변드립니다.",
     info_eyebrow: "직통 연락", info_h: "바로 연락주세요.",
     info_email: "이메일", info_phone: "전화", info_hours: "운영 시간",
     info_hours_v: "월 – 금 · 오전 9:00 – 오후 6:00 (EST)",
@@ -1722,15 +1746,23 @@ document.getElementById('chatForm').addEventListener('submit', (e) => {
   sendUserMessage(v); input.value = '';
 });
 document.getElementById('contactForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const lang = document.documentElement.getAttribute('data-lang') || 'en';
+  // Let FormSubmit POST through — just show the "Sending..." state
   const btn = e.target.querySelector('.send-btn');
-  const original = btn.innerHTML;
-  const thanks = { en: 'Thank you · replying within 24h', zh: '感谢您 · 24小时内回复', ja: 'ありがとうございます · 24時間以内にご返信' };
-  btn.innerHTML = `<span>${thanks[lang]}</span>`;
+  const lang = document.documentElement.getAttribute('data-lang') || 'en';
+  const sending = { en: 'Sending…', zh: '发送中…', ja: '送信中…', ko: '전송 중…' };
+  btn.innerHTML = `<span>${sending[lang] || sending.en}</span>`;
   btn.disabled = true;
-  setTimeout(() => { e.target.reset(); btn.innerHTML = original; btn.disabled = false; }, 3500);
+  // If submission fails (network, CORS, etc.), re-enable after 10s
+  setTimeout(() => { if (btn.disabled) { btn.disabled = false; } }, 10000);
 });
+// Show thank-you banner if we returned from FormSubmit success redirect
+if (new URLSearchParams(window.location.search).get('thanks') === '1') {
+  const form = document.getElementById('contactForm');
+  const banner = document.getElementById('thanksBanner');
+  if (form && banner) { form.style.display = 'none'; banner.hidden = false; }
+  // Scroll to contact section for visibility
+  setTimeout(() => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }, 300);
+}
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', (e) => {
     const id = a.getAttribute('href');

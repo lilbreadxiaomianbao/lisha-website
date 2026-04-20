@@ -1774,6 +1774,20 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 setLang('en');
+
+/* ============ Visit logging (silent, fire-and-forget) ============ */
+try {
+  fetch('/log', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      path: location.pathname + location.search,
+      referrer: document.referrer || '',
+      lang: document.documentElement.getAttribute('data-lang') || 'en'
+    }),
+    keepalive: true
+  }).catch(() => {});
+} catch (e) { /* never block page load */ }
 </script>
 </body>
 </html>

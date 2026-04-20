@@ -1,0 +1,8 @@
+name = "lishainsurance"
+compatibility_date = "2024-10-01"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lishainsurance-visits"
+database_id = "095bcb8b-940d-4b7b-9718-1d954de2a265"

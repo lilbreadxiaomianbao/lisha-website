@@ -67,8 +67,12 @@ export async function onRequestGet({ request, env }) {
   }
 
   const rows = (results || []).map(r => {
-    const d = new Date(r.ts);
-    const iso = d.toISOString().replace("T", " ").slice(0, 19);
+    // Render in America/New_York (same zone as Ontario — auto EST/EDT).
+    // sv-SE locale gives us "YYYY-MM-DD HH:MM:SS" format cleanly.
+    const iso = new Date(r.ts).toLocaleString("sv-SE", {
+      timeZone: "America/New_York",
+      hour12: false
+    });
     const esc = (x) => String(x || "").replace(/[&<>"']/g, c =>
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     const flag = r.country ? countryFlag(r.country) : "";
@@ -136,7 +140,7 @@ export async function onRequestGet({ request, env }) {
   </div>
   <table>
     <thead><tr>
-      <th>Time (UTC)</th><th>IP</th><th>Location</th><th>Device</th><th>Lang</th><th>Path</th><th>Referrer</th><th>User agent</th>
+      <th>Time (NY · ET)</th><th>IP</th><th>Location</th><th>Device</th><th>Lang</th><th>Path</th><th>Referrer</th><th>User agent</th>
     </tr></thead>
     <tbody>${rows || '<tr><td colspan="8" style="padding:40px;text-align:center;color:#999">No visits yet.</td></tr>'}</tbody>
   </table>

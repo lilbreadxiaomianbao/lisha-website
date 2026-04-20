@@ -1775,19 +1775,41 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 setLang('en');
 
-/* ============ Visit logging (silent, fire-and-forget) ============ */
-try {
-  fetch('/log', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
+/* ============ Visit logging + live heartbeat ============ */
+/* Sends a POST to /log on first load AND every 25s while the tab is visible.
+ * Server UPSERTs on sid so we get one row per session, with last_ping bumped
+ * on each heartbeat. This powers the "Live now" panel at /visits.            */
+(function () {
+  try {
+    // Stable per-tab session id (cleared when tab closes)
+    let sid = sessionStorage.getItem('ll_sid');
+    if (!sid) {
+      sid = Array.from(crypto.getRandomValues(new Uint8Array(8)))
+              .map(b => b.toString(16).padStart(2, '0')).join('');
+      sessionStorage.setItem('ll_sid', sid);
+    }
+    const payload = () => JSON.stringify({
+      sid,
       path: location.pathname + location.search,
       referrer: document.referrer || '',
       lang: document.documentElement.getAttribute('data-lang') || 'en'
-    }),
-    keepalive: true
-  }).catch(() => {});
-} catch (e) { /* never block page load */ }
+    });
+    const ping = () => {
+      if (document.visibilityState !== 'visible') return;
+      fetch('/log', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: payload(),
+        keepalive: true
+      }).catch(() => {});
+    };
+    ping();
+    setInterval(ping, 25_000);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') ping();
+    });
+  } catch (e) { /* never block page load */ }
+})();
 </script>
 </body>
 </html>
